@@ -5,9 +5,9 @@
 #include "nodeofsplaytree.h"
 
 /*!
- * \brief The RemoveReturn struct
+ * \brief The RemoveReturnSP struct
  */
-struct RemoveReturn
+struct RemoveReturnSP
 {
     NodeOfSplayTree* toRemoveNode = nullptr;
     NodeOfSplayTree* newNodeInthePosition = nullptr;
@@ -16,9 +16,9 @@ struct RemoveReturn
 /*!
  * \brief The Direction enum
  */
-enum Direction
+enum DirectionST
 {
-    Left, Right, None
+    STLeft, STRight, STNone
 };
 
 /*!
@@ -95,6 +95,11 @@ public:
      * \return
      */
     NodeOfSplayTree* getRoot();
+
+    /*!
+     * \brief cleanTree
+     */
+    void cleanTree();
 private:
     struct NodeOfSplayTree* root = nullptr;
 
@@ -162,7 +167,7 @@ private:
      * \param data
      * \return
      */
-    RemoveReturn remove(int data);
+    RemoveReturnSP remove(int data);
 
     /*!
      * \brief search
@@ -176,7 +181,7 @@ private:
      * \param node
      * \return
      */
-    Direction getSideIndicatorOfChildInFather(NodeOfSplayTree *node);
+    DirectionST getSideIndicatorOfChildInFather(NodeOfSplayTree *node);
 
     /*!
      * \brief replaceChildInFather

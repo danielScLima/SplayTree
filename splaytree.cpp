@@ -10,10 +10,16 @@ SplayTree::SplayTree()
 
 SplayTree::~SplayTree()
 {
+    cleanTree();
+}
+
+void SplayTree::cleanTree()
+{
     if (root != nullptr)
     {
         root->dealockSubTree();
         delete root;
+        root = nullptr;
     }
 }
 
@@ -28,13 +34,13 @@ void SplayTree::splaying(NodeOfSplayTree* node)
         if (current->father == root)
         {
             //Deve rotacionar o root para direita ou esquerda
-            Direction dir = getSideIndicatorOfChildInFather(current);
-            if (dir == Direction::Left)
+            DirectionST dir = getSideIndicatorOfChildInFather(current);
+            if (dir == DirectionST::STLeft)
             {
                 //fazer rotação para a direita em root (zig)
                 zig(root);
             }
-            else if (dir == Direction::Right)
+            else if (dir == DirectionST::STRight)
             {
                 //fazer rotação para a esquerda root (zag)
                 zag(root);
@@ -48,13 +54,13 @@ void SplayTree::splaying(NodeOfSplayTree* node)
             //O avô pode ser o root
             //Os métodos de zig e zag vão levar isso em consideração
 
-            Direction dirMySelfFather =
+            DirectionST dirMySelfFather =
                     getSideIndicatorOfChildInFather(current);
-            Direction dirfFatherGrandFather =
+            DirectionST dirfFatherGrandFather =
                     getSideIndicatorOfChildInFather(current->father);
 
-            if (dirMySelfFather == Direction::Left &&
-                dirfFatherGrandFather == Direction::Left)
+            if (dirMySelfFather == DirectionST::STLeft &&
+                dirfFatherGrandFather == DirectionST::STLeft)
             {
                 //Faz zig-zig
 
@@ -64,8 +70,8 @@ void SplayTree::splaying(NodeOfSplayTree* node)
                 //No pai (permanece pai)
                 zig(current->father);
             }
-            else if (dirMySelfFather == Direction::Right &&
-                     dirfFatherGrandFather == Direction::Right)
+            else if (dirMySelfFather == DirectionST::STRight &&
+                     dirfFatherGrandFather == DirectionST::STRight)
             {
                 //Faz zag-zag
 
@@ -75,8 +81,8 @@ void SplayTree::splaying(NodeOfSplayTree* node)
                 //No pai (permanece pai)
                 zag(current->father);
             }
-            else if (dirMySelfFather == Direction::Right &&
-                     dirfFatherGrandFather == Direction::Left)
+            else if (dirMySelfFather == DirectionST::STRight &&
+                     dirfFatherGrandFather == DirectionST::STLeft)
             {
                 //faz zag no pai
                 zag(current->father);
@@ -84,8 +90,8 @@ void SplayTree::splaying(NodeOfSplayTree* node)
                 //Faz zig no novo pai  (que era avô no inicio)
                 zig(current->father);
             }
-            else if (dirMySelfFather == Direction::Left &&
-                     dirfFatherGrandFather == Direction::Right)
+            else if (dirMySelfFather == DirectionST::STLeft &&
+                     dirfFatherGrandFather == DirectionST::STRight)
             {
                 //faz zig no pai
                 zig(current->father);
@@ -144,9 +150,9 @@ struct NodeOfSplayTree* SplayTree::insert(int data)
     }
 }
 
-RemoveReturn SplayTree::remove(int data)
+RemoveReturnSP SplayTree::remove(int data)
 {
-    RemoveReturn ret;
+    RemoveReturnSP ret;
 
     if (root == nullptr)
     {
@@ -404,17 +410,17 @@ bool SplayTree::insertInterface(int data)
     return inserted != nullptr;
 }
 
-Direction SplayTree::getSideIndicatorOfChildInFather(NodeOfSplayTree *node)
+DirectionST SplayTree::getSideIndicatorOfChildInFather(NodeOfSplayTree *node)
 {
     NodeOfSplayTree* father = node->father;
     if (father == nullptr)
-        return Direction::None;
+        return DirectionST::STNone;
     if (father->left == node)
-        return Direction::Left;
+        return DirectionST::STLeft;
     else if (father->right == node)
-        return Direction::Right;
+        return DirectionST::STRight;
     else
-        return Direction::None;
+        return DirectionST::STNone;
 }
 
 //the rotation to the left on node
@@ -489,7 +495,7 @@ void SplayTree::replaceChildInFather(NodeOfSplayTree* father, NodeOfSplayTree* o
 
 NodeOfSplayTree *SplayTree::removeInterface(int data)
 {
-    RemoveReturn removeReturn = this->remove(data);
+    RemoveReturnSP removeReturn = this->remove(data);
 
     if (removeReturn.toRemoveNode->father != nullptr)
         splaying(removeReturn.toRemoveNode->father);

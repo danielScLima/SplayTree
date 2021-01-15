@@ -1,5 +1,7 @@
 Splay Tree
 ====================
+Build with AppVeyor: [![Build status](https://ci.appveyor.com/api/projects/status/qdc2h13ewc5xbol0?svg=true)](https://ci.appveyor.com/project/DanielSLima/splaytree)
+
 Building with Travis: [![Build Status](https://www.travis-ci.com/danielScLima/SplayTree.svg?branch=master)](https://www.travis-ci.com/danielScLima/SplayTree)
 
 This repository has a project with the implementation of a Splay Tree.

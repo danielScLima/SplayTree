@@ -1,5 +1,6 @@
 Splay Tree
 ====================
+Building with Travis: [![Build Status](https://www.travis-ci.com/danielScLima/SplayTree.svg?branch=master)](https://www.travis-ci.com/danielScLima/SplayTree)
 
 This repository has a project with the implementation of a Splay Tree.
 
